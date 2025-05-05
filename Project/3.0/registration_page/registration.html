@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../images/tab-logo.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="registration.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background iFrame -->
+    <div class="background-container">
+        <iframe src="/3.0/homepage/index.html" class="background-iframe" frameborder="0"></iframe>
+    </div>
+    
+    <div class="wrapper">
+        <form id="register-form">
+<div class="logo-container">
+<h1 class="tagesschrift-regular" style="color: white;">Create an Account</h1>
+</div>
+
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username" required>
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="E-mail" required>
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fa fa-eye-slash password-toggle" aria-hidden="true"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                <i class="fa fa-eye-slash confirm-toggle" aria-hidden="true"></i>
+            </div>
+
+            <p id="error-message" style="color: red; font-size: 12px; display: none;">
+                Passwords do not match!
+            </p>
+
+            <button type="submit" class="login-button">Register</button>
+
+            <div class="register-link">
+                <p>Have an account? <a href="../login_page/login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Link the external JavaScript file -->
+    <script src="./registration.js"></script>
+</body>
+</html>

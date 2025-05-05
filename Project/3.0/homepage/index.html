@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IRecommend - HTML Version</title>
+  <link rel="icon" type="image/png" href="images/tab-logo.png" />
+  <!-- Using Font Awesome CDN for permanent icon support -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="app-container light">
+    <!-- Header -->
+<header class="app-header">
+      <div class="header-content" style="display: flex; align-items: center; gap: 20px; max-width: 90vw; margin: 0 auto; justify-content: flex-start; min-width: 320px; padding: 0 10px;">
+        <!-- Logo -->
+        <div class="logo" style="flex-shrink: 0; margin-right: 40px;">
+          <a href="#" data-section="home">
+          <img src="images/logo-light.png" alt="IRecommend Logo" id="logo-img" style="height: 60px;" />
+          </a>
+        </div>
+
+        <!-- Search bar -->
+        <div class="search-container" style="position: relative; width: 350px; flex-grow: 1; max-width: 600px; margin-right: 150px;">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search movies and TV series..."
+            aria-label="Search movies and TV series"
+            style="width: 100%; height: 50px; font-size: 18px; padding: 12px 40px 12px 16px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); border: 2px solid grey; border-radius: 36px; color: #000;"
+          />
+          <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #000; pointer-events: none; font-size: 24px;"></i>
+        </div>
+
+        <!-- Navigation links -->
+        <nav class="nav-links" style="display: flex; gap: 15px; flex-shrink: 0;">
+          <a href="#" data-section="movies">Movies</a>
+          <a href="#" data-section="tv-series" style="margin-right: 80px;">TV Series</a>
+        </nav>
+
+        <!-- Theme toggle and user menu -->
+        <div class="header-actions" style="display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+          <!-- Theme toggle button -->
+          <button id="theme-toggle-btn" aria-label="Toggle theme" title="Toggle theme" style="background: none; border: none; cursor: pointer; z-index: 1100; font-size: 26px;">
+            <i class="fas fa-moon"></i>
+          </button>
+
+          <!-- User menu button -->
+          <div class="user-menu-container" style="z-index: 1100;">
+            <button id="user-menu-btn" aria-label="User menu" title="User menu" style="background: none; border: none; cursor: pointer; font-size: 42px;">
+              <i class="fa-solid fa-circle-user"></i>
+            </button>
+            <div id="user-dropdown" class="user-dropdown hidden" style="position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px; width: 200px;">
+              <div class="user-dropdown-header" style="margin-bottom: 10px;">
+                <p class="font-semibold" style="margin: 0;">John Doe</p>
+                <p class="email" style="margin: 0; font-size: 0.9em; color: #666;">john@example.com</p>
+              </div>
+              <div class="user-dropdown-buttons" style="display: flex; flex-direction: column; gap: 8px;">
+                <button type="button" class="user-dropdown-btn" style="background: none; border: none; text-align: left; cursor: pointer; padding: 5px 0;">
+                  <i class="fas fa-cog"></i> Account Settings
+                </button>
+                <button type="button" class="user-dropdown-btn" id="sign-in-btn" style="background: none; border: none; text-align: left; cursor: pointer; padding: 5px 0;">
+                  Sign In
+                </button>
+                <button type="button" class="user-dropdown-btn red hidden" id="sign-out-btn" style="background: none; border: none; text-align: left; cursor: pointer; padding: 5px 0; color: red;">
+                  <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Floating filter pills -->
+    <div class="filter-pills" aria-label="Filter categories">
+      <button class="filter-pill" data-filter="Language">Language</button>
+      <button class="filter-pill" data-filter="Genre">Genre</button>
+      <button class="filter-pill" data-filter="Year">Year</button>
+      <button class="filter-pill" data-filter="OTT">OTT</button>
+      <button class="filter-pill" data-filter="Web Series">Web Series</button>
+      <button class="filter-pill" data-filter="TV Series">TV Series</button>
+    </div>
+
+    <!-- Filter dropdown container -->
+    <div id="filter-dropdown" class="user-dropdown hidden" aria-label="Filter options">
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="filter-dropdown-body">
+          <tr><td>Option 1</td><td>Value 1</td></tr>
+          <tr><td>Option 2</td><td>Value 2</td></tr>
+          <tr><td>Option 3</td><td>Value 3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed" aria-label="Sidebar navigation">
+      <nav>
+        <ul>
+          <li>
+            <a href="#" data-section="home" title="Home">
+              <i class="fa-solid fa-house"></i>
+              <span class="sidebar-label">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="top-rated" title="Top Rated">
+              <i class="fas fa-star"></i>
+              <span class="sidebar-label">Top Rated</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="watch-later" title="Watch Later">
+              <i class="fas fa-clock"></i>
+              <span class="sidebar-label">Watch Later</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="liked" title="Liked">
+              <i class="fas fa-heart"></i>
+              <span class="sidebar-label">Liked</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="watched" title="Watched">
+              <i class="fas fa-eye"></i>
+              <span class="sidebar-label">Watched</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="main-content">
+      <!-- Home section -->
+      <section id="home" class="content-section active" aria-label="Home">
+        <!-- Removed Movies and TV Series headings as requested -->
+        <div id="movies-grid" class="grid"></div>
+        
+        
+
+        <div id="tvseries-grid" class="grid"></div>
+
+        <h2>Liked Movies</h2>
+        <div id="liked-movies-container" class="grid"></div>
+
+        <h2>Recommended Movies</h2>
+        <div id="recommended-movies-container" class="grid"></div>
+        
+
+        <h2>All Movies</h2>
+        <div id="all-movies-container" class="grid"></div>
+
+        <div id="no-results" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No movies or TV series found matching your search.</p>
+        </div>
+      </section>
+
+      <!-- TV Series section -->
+      <section id="tv-series" class="content-section" aria-label="TV Series">
+        <h2>Popular TV Series</h2>
+        <div id="tvseries-only-grid" class="grid"></div>
+        <div id="no-results-tv" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No TV series found matching your search.</p>
+        </div>
+      </section>
+
+      <!-- Movies section -->
+      <section id="movies" class="content-section" aria-label="Movies">
+        <h2>Latest Movies</h2>
+        <div id="movies-only-grid" class="grid"></div>
+        <div id="no-results-movies" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No movies found matching your search.</p>
+        </div>
+      </section>
+      <!-- Top Rated section -->
+      <section id="top-rated" class="content-section" aria-label="Top Rated">
+        <h2>Top Rated</h2>
+        <div id="top-rated-grid" class="grid"></div>
+        <div id="no-results-top-rated" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No top rated movies or TV series found matching your search.</p>
+        </div>
+      </section>
+
+      <!-- Watch Later section -->
+      <section id="watch-later" class="content-section" aria-label="Watch Later">
+        <h2>Watch Later</h2>
+        <div id="watch-later-grid" class="grid"></div>
+        <div id="no-results-watch-later" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No movies or TV series found in your watch later list.</p>
+        </div>
+      </section>
+
+      <!-- Liked section -->
+      <section id="liked" class="content-section" aria-label="Liked">
+        <h2>Liked</h2>
+        <div id="liked-grid" class="grid"></div>
+        <div id="no-results-liked" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No liked movies or TV series found matching your search.</p>
+        </div>
+      </section>
+
+      <!-- Watched section -->
+      <section id="watched" class="content-section" aria-label="Watched">
+        <h2>Watched</h2>
+        <div id="watched-grid" class="grid"></div>
+        <div id="no-results-watched" class="no-results hidden">
+          <h2>No results found</h2>
+          <p>No watched movies or TV series found matching your search.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Overlay for movie details -->
+    <div id="movie-overlay" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="overlay-title" aria-describedby="overlay-description">
+      <div class="overlay-content">
+        <button id="overlay-close-btn" aria-label="Close overlay" class="overlay-close-btn">&times;</button>
+        <h2 id="overlay-title"></h2>
+        <img id="overlay-image" src="" alt="" />
+        <p id="overlay-description"></p>
+      </div>
+    </div>
+
+    <script src="scripts.js"></script>
+  </div>
+</body>
+</html>
